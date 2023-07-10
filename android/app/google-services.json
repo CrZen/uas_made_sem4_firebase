@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "176716885111",
+    "firebase_url": "https://uas-made-sem4-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "uas-made-sem4",
+    "storage_bucket": "uas-made-sem4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176716885111:android:83b46e5edb980229e22a72",
+        "android_client_info": {
+          "package_name": "com.example.uas_made_sem4_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176716885111-jj14ashcsah3roiqij2f7ipb6j94gpim.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClPxJBygJBbcsf1Bsu_fj4e6vWnFnx5Yo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176716885111-jj14ashcsah3roiqij2f7ipb6j94gpim.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "176716885111-iold5gq59mn733771in54m5nj1p55jfo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.uasMadeSem4Firebase.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
