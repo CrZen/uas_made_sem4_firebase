@@ -11,6 +11,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final databaseReference = FirebaseDatabase.instance.ref();
+  late DatabaseReference doorLocksReference;
 
   bool isDoorLocked1 = false;
   bool isDoorLocked2 = false;
@@ -19,33 +20,24 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    initializeDoorLocks();
+    doorLocksReference = databaseReference.child('doorLocks');
+    doorLocksReference.onValue.listen((event) {
+      var snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        var doorLocks = snapshot.value as Map<dynamic, dynamic>;
+        setState(() {
+          isDoorLocked1 = doorLocks['door1'] ?? false;
+          isDoorLocked2 = doorLocks['door2'] ?? false;
+          isDoorLocked3 = doorLocks['door3'] ?? false;
+        });
+      }
+    });
   }
 
-  Future<void> initializeDoorLocks() async {
-    final snapshot1 = await databaseReference.child('doorLocks/door1').once();
-    final bool? initialValue1 = snapshot1.snapshot.value as bool?;
-    if (initialValue1 != null) {
-      setState(() {
-        isDoorLocked1 = initialValue1;
-      });
-    }
-
-    final snapshot2 = await databaseReference.child('doorLocks/door2').once();
-    final bool? initialValue2 = snapshot2.snapshot.value as bool?;
-    if (initialValue2 != null) {
-      setState(() {
-        isDoorLocked2 = initialValue2;
-      });
-    }
-
-    final snapshot3 = await databaseReference.child('doorLocks/door3').once();
-    final bool? initialValue3 = snapshot3.snapshot.value as bool?;
-    if (initialValue3 != null) {
-      setState(() {
-        isDoorLocked3 = initialValue3;
-      });
-    }
+  @override
+  void dispose() {
+    doorLocksReference.onDisconnect();
+    super.dispose();
   }
 
   @override
@@ -73,7 +65,7 @@ class _HomeState extends State<Home> {
                   setState(() {
                     isDoorLocked1 = value;
                   });
-                  databaseReference.child('doorLocks/door1').set(value);
+                  doorLocksReference.update({'door1': value});
                 },
                 secondary: Icon(isDoorLocked1 ? Icons.lock : Icons.lock_open),
               ),
@@ -84,7 +76,7 @@ class _HomeState extends State<Home> {
                   setState(() {
                     isDoorLocked2 = value;
                   });
-                  databaseReference.child('doorLocks/door2').set(value);
+                  doorLocksReference.update({'door2': value});
                 },
                 secondary: Icon(isDoorLocked2 ? Icons.lock : Icons.lock_open),
               ),
@@ -95,7 +87,7 @@ class _HomeState extends State<Home> {
                   setState(() {
                     isDoorLocked3 = value;
                   });
-                  databaseReference.child('doorLocks/door3').set(value);
+                  doorLocksReference.update({'door3': value});
                 },
                 secondary: Icon(isDoorLocked3 ? Icons.lock : Icons.lock_open),
               ),
